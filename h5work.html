@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Yuki_h5案例</title>
+</head>
+<link rel="stylesheet" type="text/css" href="css/base.css">
+<link rel="stylesheet" type="text/css" href="icon/iconfont.css">
+<style type="text/css">
+	/*头部*/
+	footer img{height:50px;position:absolute;left:20px;top:20px;}
+	footer .main-page{width:100px;height:50px;border:2px solid #eee3c3;background:#efefd5;position:absolute;right:20px;top:20px;text-align: center;}
+	footer .main-page a{font-size:18px;color:#643411;line-height:50px;}
+	footer i{margin-left:-160px;}
+	footer div.line{width:400px;margin-left:-200px;}
+	.main .list{width:880px; height:440px;margin:80px auto;}
+	.main .list li{width:200px;height:200px;margin:10px;float:left;position:relative;cursor: pointer;}
+	.main .list li img{height:200px;}
+	.main .list li .con{position:absolute;width:200px;height:40px;background:rgba(0,0,0,0.5);color:#fff;font-size:18px;text-align: center;line-height:40px;left:0;bottom:0;}
+	.main .next{position:absolute;right:50px;top:40%;width:50px;height:50px;}
+	.main .prev{position:absolute;left:50px;top:40%;width:50px;height:50px;}
+	.main .next i{font-size:34px;position:absolute;left:0;top:0;margin:0;cursor: pointer;}
+	.main .prev i{font-size:34px;position:absolute;right:0;top:0;margin:0;cursor: pointer;}
+	body{overflow: hidden;background:url(img/background.png) repeat;}
+	.mask{width:100%;height:100%;background: url(img/background.png) repeat;position:fixed;left:0;top:0;}
+	.close{font-size:18px;color:#fff;font-weight: bold;position:fixed;right:10px;top:10px;border:2px solid #fff;padding:5px;cursor: pointer;background:#ae997a;border:2px solid #ddd1b6;}
+	input{font-size:18px;position:fixed;left:49%;top:70px;cursor: pointer;background:#ae997a;padding:3px 10px;color:#fff;margin-left:-15px;}
+	.case6 input:nth-child(2){margin-left:-60px;}
+	i{position:fixed;top:10px;left:50%;color:#019157;font-size:32px;margin-left:-85px;}
+	.case4 i,.case5 i{margin-left:-100px;}
+	.case6 i{margin-left:-130px;}
+	.case6 div.line{width:350px;margin-left:-175px;}
+	div.line{width:250px;height:0;border-top:2px solid #ddd1b6;position:fixed;left:50%;top:60px;margin-left:-125px;border-bottom:2px solid #fbf9f7; }
+	img.shadow{position:fixed;left:50%;top:440px;width:740px;height:168px;z-index: 1;margin-left:-370px;}
+	#case1,#case2,#case3{width:700px;height:420px;background:url(img/1.jpg);position:fixed;left:50%;top:120px;margin-left:-350px;z-index: 2;}
+	#case1 span{position:absolute;background:url(img/0.jpg)}
+	#case2 span{position:absolute;transform-style:preserve-3d;}
+	#case2 span .front{width:100%;height:100%;position:absolute;left:0;top:0;background:url(img/0.jpg);z-index: 2;backface-visibility: hidden;}
+	#case2 span .back{width:100%;height:100%;position:absolute;left:0;top:0;background: url(img/1.jpg);transform:scale(-1,1);z-index: 1;}
+	#case3{background: url(img/0.jpg);}
+    #case3 .page{width: 50%;height: 100%;position: absolute;right: 0;top: 0;transform-origin: left center;transform-style: preserve-3d;z-index: 2;}
+    #case3 .page div{width: 100%;height: 100%;position: absolute;left: 0;top: 0;}
+    #case3 .front{background: url(img/0.jpg)repeat right top;backface-visibility: hidden;z-index: 2;}
+    #case3 .back{background: url(img/1.jpg)repeat left top;transform: scale(-1, 1);z-index: 1;}
+    #case3 .page2{width: 50%;height: 100%;background: url(img/1.jpg)repeat right top;position: absolute;right: 0;top: 0;z-index: 1;}
+    #case4{width: 133px;height: 200px;position: absolute;left: 50%;top: 40%;margin-left: -67px;margin-top: -100px;transform: perspective(1200px) rotateY(0deg) rotateX(-15deg);transform-style: preserve-3d;}
+    #case4 li{width: 100%; height: 100%;position: absolute;left: 0;top: 0;-webkit-box-shadow: 0 0 20px #fff;box-shadow: 0 0 20px #fff;border-radius: 5px;-webkit-box-reflect: below 10px -webkit-linear-gradient(rgba(0,0,0,0) 40%, rgba(0,0,0,.4));transform: perspective(1200px) rotateY(0deg) translateZ(0px);}
+    #case5{position:relative;margin:-450px auto;width:300px;height:300px;transform:perspective(800px) rotateY(-60deg) rotateX(30deg);transform-style:preserve-3d;}
+	#case5 img{position:absolute;left:0;top:0;width:300px;height:300px;}
+	#case5 .front{transform: translateZ(150px);}
+	#case5 .back{transform:translateZ(-150px);}
+	#case5 .left{transform: translateX(-150px) rotateY(90deg);}
+	#case5 .top{transform: translateY(-150px) rotateX(90deg);}
+	#case5 .bottom{transform: translateY(150px) rotateX(90deg);}
+	#case5 .right{transform: translateX(150px) rotateY(90deg);}
+	#case6{width: 400px;height: 300px;position: absolute;left: 50%;top: 50%;margin-left: -200px;margin-top: -100px;perspective: 800px;}
+    #case6 li{width: 400px;height: 300px;position: absolute;left: 0;top: 0;opacity: 0;transition: 1s all ease;}
+    #case6 li img{height:300px;width:400px;}
+    #case6 li.cur{opacity: 1;z-index: 2;}
+    #case6 li.l1{transform:translateX(-200px) rotateY(60deg);opacity: .6;}
+    #case6 li.r1{transform:translateX(200px) rotateY(-60deg);opacity: .6;}
+    #case6 li.l2{transform:translateX(-300px) rotateY(80deg);}
+    #case6 li.r2{transform:translateX(300px ) rotateY(-80deg);}
+    @keyframes move{from{transform: rotate(0deg);}to{transform: rotate(360deg);}}
+    #case7{width: 300px;height: 300px;margin:-450px auto;box-shadow: 20px 0 20px #FFE517,0 20px 20px #FF1026,-20px 0 20px #FFE517, 0  -20px 20px #FF1026;border-radius: 50%;animation: 1s move linear infinite;}
+    #case8{width: 486px;height:486px;position:absolute;left:50%;top:50%;margin-left:-243px;margin-top:-200px;z-index: 2;}
+    #case8 li{width: 150px;height: 150px; overflow:hidden;float: left;margin: 5px;border: 1px solid #000;transition: .5s all ease;}
+     #case8 li img{height:150px;}
+    #case8 li:hover{transform: scale(1.5);}
+</style>
+<script src="js/base.js"></script>
+<script type="text/javascript">
+	window.onload=function(){
+		var oBody=document.querySelector('body');
+		// 主页效果
+		function main(){
+			var oMain=document.querySelector('.main');
+			var oPrev=document.querySelector('.prev');
+			var oNext=document.querySelector('.next');
+			var aList=document.querySelectorAll('.list')
+			oPrev.onclick=function(){
+				aList[0].style.display='block';
+				aList[1].style.display='none';
+			};
+			oNext.onclick=function(){
+				aList[1].style.display='block';
+				aList[0].style.display='none';
+			};
+			var aLi=oMain.querySelectorAll('li');
+			for(var i=0;i<aLi.length;i++){
+				aLi[i].index=i;
+				aLi[i].onclick=function(){
+					switch(this.index){
+						case 0:
+							var oCase1=document.createElement('div');
+							oCase1.className='case1';
+							oCase1.innerHTML='<div class="mask"></div>\
+											<input type="button" value="切换">\
+											<div id="case1"></div>\
+											<div class="close">close</div>\
+											<i>3D爆炸效果</i>\
+											<div class="line"></div>\
+											<img class="shadow" src="img/shadow.png">'
+							oBody.appendChild(oCase1);
+							case1();
+							break;
+						case 1:
+							var oCase2=document.createElement('div');
+							oCase2.className='case2';
+							oCase2.innerHTML='<div class="mask"></div>\
+											<input type="button" value="切换">\
+											<div id="case2"></div>\
+											<div class="close">close</div>\
+											<i>3D翻转效果</i>\
+											<div class="line"></div>\
+											<img class="shadow" src="img/shadow.png">';
+							oBody.appendChild(oCase2);
+							case2();
+							break;
+						case 2:
+							var oCase3=document.createElement('div');
+							oCase3.className='case3';
+							oCase3.innerHTML='<div class="mask"></div>\
+											<input type="button" value="切换">\
+											<div id="case3">\
+												<div class="page">\
+													<div class="front"></div>\
+													<div class="back"></div>\
+												</div>\
+												<div class="page2"></div>\
+											</div>\
+											<div class="close">close</div>\
+											<i>3D翻页效果</i>\
+											<div class="line"></div>\
+											<img class="shadow" src="img/shadow.png">';
+							oBody.appendChild(oCase3);
+							case3();
+							break;
+						case 3:
+							var oCase4=document.createElement('div');
+							oCase4.className='case4';
+							oCase4.innerHTML='<div class="mask"></div>\
+											<ul id="case4">\
+									    	</ul>\
+											<div class="close">close</div>\
+											<i>3D图片环效果</i>\
+											<div class="line"></div>';
+							oBody.appendChild(oCase4);
+							case4();
+							break;
+						case 4:
+							var oCase5=document.createElement('div');
+							oCase5.className='case5';
+							oCase5.innerHTML='<div class="mask"></div>\
+											<div id="case5">\
+												<img src="img/50.jpg" class="left">\
+												<img src="img/51.jpg" class="right">\
+												<img src="img/52.jpg" class="top">\
+												<img src="img/53.jpg" class="bottom">\
+												<img src="img/54.jpg" class="front">\
+												<img src="img/55.jpg" class="back">\
+											</div>\
+											<div class="close">close</div>\
+											<i>3D正方体效果</i>\
+											<div class="line"></div>';
+							oBody.appendChild(oCase5);
+							case5();
+							break;
+						case 5:
+							var oCase6=document.createElement('div');
+							oCase6.className='case6';
+							oCase6.innerHTML='<div class="mask"></div>\
+											<input type="button" value="←">\
+											<input type="button" value="→">\
+									    	<ul id="case6">\
+									        	<li class="l2"><img src="img/50.jpg"></li>\
+									        	<li class="l1"><img src="img/51.jpg"></li>\
+									        	<li class="cur"><img src="img/52.jpg"></li>\
+									        	<li class="r1"><img src="img/53.jpg"></li>\
+									        	<li class="r2"><img src="img/54.jpg"></li>\
+									        	<li><img src="img/55.jpg"></li>\
+									        	<li><img src="img/56.jpg"></li>\
+									        	<li><img src="img/57.jpg"></li>\
+									    	</ul>\
+											<div class="close">close</div>\
+											<i>3D淡入淡出效果</i>\
+											<div class="line"></div>\
+											<img class="shadow" src="img/shadow.png">';
+							oBody.appendChild(oCase6);
+							case6();
+							break;
+						case 6:
+							var oCase7=document.createElement('div');
+							oCase7.className='case7';
+							oCase7.innerHTML='<div class="mask"></div>\
+											<div id="case7"></div>\
+											<div class="close">close</div>\
+											<i>h5光圈效果</i>\
+											<div class="line"></div>';
+							oBody.appendChild(oCase7);
+							break;
+						case 7:
+							var oCase8=document.createElement('div');
+							oCase8.className='case8';
+							oCase8.innerHTML='<div class="mask"></div>\
+										<ul id="case8">\
+									        <li><img src="img/1.jpg"></li>\
+									        <li><img src="img/2.jpg"></li>\
+									        <li><img src="img/3.jpg"></li>\
+									        <li><img src="img/4.jpg"></li>\
+									       <li><img src="img/5.jpg"></li>\
+									        <li><img src="img/6.jpg"></li>\
+									        <li><img src="img/0.jpg"></li>\
+									        <li><img src="img/53.jpg"></li>\
+									        <li><img src="img/56.jpg"></li>\
+									    </ul>\
+										<div class="close">close</div>\
+										<i>多图片展示</i>\
+										<div class="line"></div>';
+							oBody.appendChild(oCase8);
+							break;
+					}
+					var oClose=document.querySelector('.close');
+					oClose.onclick=function(){
+						oBody.removeChild(this.parentNode);
+					};
+				};
+			}
+		};
+		main();
+		// 爆炸效果
+		function case1(){
+			var oBox=document.querySelector('#case1');
+			var R=5;
+			var C=7;
+			for(var r=0;r<R;r++){
+				for(var c=0;c<C;c++){
+					var oSpan=document.createElement('span');
+					oSpan.style.width=oBox.offsetWidth/C+'px';
+					oSpan.style.height=oBox.offsetHeight/R+'px';
+					oBox.appendChild(oSpan);
+					oSpan.style.left=oSpan.offsetWidth*c+'px';
+					oSpan.style.top=oSpan.offsetHeight*r+'px';
+					oSpan.style.backgroundPosition='-'+oSpan.offsetWidth*c+'px -'+oSpan.offsetHeight*r+'px';
+				}
+			}
+			var aSpan=oBox.children;
+			var iNow=0;
+			var bFlag=false;
+			var oBtn=document.querySelector('.case1 input');
+			oBtn.onclick=function(){
+				if(bFlag)return;
+                bFlag=true;
+                iNow++;
+                for(var i=0; i<aSpan.length; i++){
+                    aSpan[i].style.transition='.6s all ease';
+                    // X偏移
+                    var x=oBox.offsetWidth/2-aSpan[i].offsetWidth/2-aSpan[i].offsetLeft;
+                    var y=oBox.offsetHeight/2-aSpan[i].offsetHeight/2-aSpan[i].offsetTop;
+                    // 动那些值
+                    aSpan[i].style.transform='scale(2) translateX('+-x+'px) translateY('+-y+'px) rotateX('+rnd(-180, 180)+'deg) rotateY('+rnd(-180, 180)+'deg)';
+                    aSpan[i].style.opacity=0;
+                }
+                // 运动结束
+                aSpan[0].addEventListener('transitionend', function(){
+                    for(var i=0; i<aSpan.length; i++){
+                        aSpan[i].style.transition='none';
+                        aSpan[i].style.transform='scale(1) translateX(0px) translateY(0px) rotateX(0deg) rotateY(0deg)';
+                        aSpan[i].style.opacity=1;
+                        aSpan[i].style.backgroundImage='url(img/'+iNow%7+'.jpg)';
+                        oBox.style.backgroundImage='url(img/'+(iNow+1)%7+'.jpg)';
+                    }
+                    bFlag=false;
+                }, false);
+			};
+		};
+		// 翻转效果
+		function case2(){
+			var oBox=document.querySelector('#case2');
+			var R=4;
+			var C=7;
+			for(var r=0;r<R;r++){
+				for(var c=0;c<C;c++){
+					var oSpan=document.createElement('span');
+					oSpan.style.width=oBox.offsetWidth/C+'px';
+					oSpan.style.height=oBox.offsetHeight/R+'px';
+					oBox.appendChild(oSpan);
+					oSpan.style.top=oSpan.offsetHeight*r+'px';
+					oSpan.style.left=oSpan.offsetWidth*c+'px';
+					oSpan.innerHTML='<em class="front"></em><em class="back"></em>';
+					oSpan.children[0].style.backgroundPosition='-'+oSpan.offsetWidth*c+'px -'+oSpan.offsetHeight*r+'px';
+                    oSpan.children[1].style.backgroundPosition='-'+oSpan.offsetWidth*c+'px -'+oSpan.offsetHeight*r+'px';
+					oSpan.r=r;
+					oSpan.c=c;
+				}
+			}
+			var aSpan=oBox.children;
+			var iNow=0;
+			var bFlag=false;
+			var oBtn=document.querySelector('.case2 input');
+			oBtn.onclick=function(){
+				if(bFlag)return;
+				bFlag=true;
+				iNow++;
+				for(var i=0;i<aSpan.length;i++){
+					aSpan[i].style.transition='1s all ease '+(aSpan[i].r+aSpan[i].c)*200+'ms';
+                    aSpan[i].style.transform='perspective(800px) rotateY(-180deg)';
+				}
+				aSpan[aSpan.length-1].addEventListener('transitionend',function(){
+					for(var i=0; i<aSpan.length; i++){
+                        aSpan[i].style.transition='none';
+                        aSpan[i].style.transform='perspective(800px) rotateY(0deg)';
+						aSpan[i].children[0].style.backgroundImage='url(img/'+iNow%7+'.jpg)';
+                        aSpan[i].children[1].style.backgroundImage='url(img/'+(iNow+1)%7+'.jpg)';
+                        oBox.style.backgroundImage='url(img/'+(iNow+1)%7+'.jpg)';
+					}
+					bFlag=false;
+				},false)
+			};
+		};
+		// 翻页效果
+		function case3(){
+			var oBox=document.querySelector('#case3');
+            var oPage=document.querySelector('#case3 .page');
+            var oFront=document.querySelector('#case3 .front');
+            var oBack=document.querySelector('#case3 .back');
+            var oPage2=document.querySelector('#case3 .page2');
+            var oBtn=document.querySelector('.case3 input');
+
+            var iNow=0;
+            var bFlag=false;
+            oBtn.onclick=function(){
+                if(bFlag)return;
+                bFlag=true;
+                iNow++;
+                oPage.style.transition='1s all ease';
+                oPage.style.transform='perspective(800px) rotateY(-180deg)';
+                // 运动结束
+                oPage.addEventListener('transitionend', function(){
+                    // 换图
+                    oBox.style.backgroundImage='url(img/'+iNow%7+'.jpg)';
+                    oFront.style.backgroundImage='url(img/'+iNow%7+'.jpg)';
+                    oBack.style.backgroundImage='url(img/'+(iNow+1)%7+'.jpg)';
+                    oPage2.style.backgroundImage='url(img/'+(iNow+1)%7+'.jpg)';
+                    // 拉回page
+                    oPage.style.transition='none';
+                    oPage.style.transform='perspective(800px) rotateY(0deg)';
+                    bFlag=false;
+                }, false);
+            };
+		};
+		// 图片环效果
+		function case4(){
+			var oUl=document.querySelector('#case4');
+            var N=11;
+            for(var i=0; i<N; i++){
+                var oLi=document.createElement('li');
+                oLi.style.backgroundImage='url(img/4'+i+'.jpg)';
+                oUl.appendChild(oLi);
+                // setStyle3(oLi,'transition','1s all ease '+200*(N-i)+'ms')
+                setStyle3(oLi, 'transition', '1s all ease '+200*(N-i)+'ms');
+                // oLi.style.transition='1s all ease '+200*(N-i)+'ms';
+                (function(oLi, i){
+                    setTimeout(function(){
+                    	setStyle3(oLi, 'transform', 'perspective(1200px)  rotateY('+360/11*i+'deg) translateZ(340px)');
+                        // oLi.style.transform='perspective(1200px)  rotateY('+360/11*i+'deg) translateZ(340px)';
+                    }, 0)
+                })(oLi, i);
+            }
+
+            var aLi=oUl.children;
+            var y=0;
+            var x=-15;
+            var iSpeedX=0;
+            var iSpeedY=0;
+            var lastX=0;
+            var lastY=0;
+            var timer;
+            var bFlag=false;
+            // 关灯
+            aLi[0].addEventListener('transitionend', function(){
+                turn(-x, y);
+                bFlag=true;
+            }, false);
+            document.onmousedown=function(ev){
+                if(bFlag==false)return;
+                clearInterval(timer);
+                var oEvent=ev || event;
+                var disX=oEvent.clientX-y;
+                var disY=oEvent.clientY-x;
+                for(var i=0; i<aLi.length; i++){
+                	setStyle3(aLi[i], 'transition', 'none');
+                    // aLi[i].style.transition='none';
+                }
+                document.onmousemove=function(ev){
+                    var oEvent=ev || event;
+
+                    x=oEvent.clientY-disY;
+                    y=oEvent.clientX-disX;
+                    turn(x/3, y/3);
+                    iSpeedX=oEvent.clientX-lastX;
+                    iSpeedY=oEvent.clientY-lastY;
+
+                    lastX=oEvent.clientX;
+                    lastY=oEvent.clientY;
+                };
+                document.onmouseup=function(){
+                    document.onmousemove=null;
+                    document.onmouseup=null;
+                    timer=setInterval(function(){
+                        y+=iSpeedX;
+                        x+=iSpeedY;
+
+                        iSpeedX*=0.95;
+                        iSpeedY*=0.95;
+
+                        turn(x/3, y/3);
+                    }, 30);
+                };
+                return false;
+            };
+
+
+            function turn(x, y){
+                for(var i=0; i<aLi.length; i++){
+                	setStyle3(aLi[i], 'transform', 'perspective(1200px) rotateY('+(360/11*i+y)+'deg) translateZ(340px)');
+                    // aLi[i].style.transform='perspective(1200px) rotateY('+(360/11*i+y)+'deg) translateZ(340px)';
+                    setStyle3(oUl, 'transform', 'perspective(1200px) rotateY(0deg) rotateX('+-x+'deg)');
+                    // oUl.style.transform='perspective(1200px) rotateY(0deg) rotateX('+-x+'deg)';
+
+                    // 角度
+                    var scale=Math.abs(Math.abs((360/11*i+y)%360)-180)/180;
+                    scale<0.3 && (scale=0.3);
+                    aLi[i].style.opacity=scale;
+                }
+            }
+		};
+		// 正方体效果
+		function case5(){
+			var oBox=document.querySelector('#case5');
+			var x=30;
+			var y=-60;
+			oBox.onmousedown=function(ev){
+				var oEvent=ev || event;
+				var disX=oEvent.clientX-y;
+				var disY=oEvent.clientY-x;
+				document.onmousemove=function(ev){
+					var oEvent=ev || event;
+					x=oEvent.clientY-disY;
+					y=oEvent.clientX-disX;
+					oBox.style.transform='perspective(800px) rotateY('+y+'deg) rotateX('+x+'deg)';
+					console.log(x);
+				};
+				document.onmouseup=function(){
+					document.onmousemove=null;
+					document.onmouseup=null;
+				};
+				return false;
+			};
+		};
+		// 淡入淡出效果
+		function case6(){
+			var oBox=document.querySelector('.case6');
+			var oLeft=oBox.querySelectorAll('input')[0];
+            var oRight=oBox.querySelectorAll('input')[1];
+            var aLi=oBox.querySelectorAll('#case6 li');
+
+            // 准备空数组存class
+            var arr=[];
+            for(var i=0; i<aLi.length; i++){
+                arr[i]=aLi[i].className;
+            }
+
+            //左
+            oLeft.onclick=function(){
+                arr.unshift(arr.pop());
+                console.log(arr);
+                for(var i=0; i<arr.length; i++){
+                    aLi[i].className=arr[i];
+                }
+            };
+            // 右
+            oRight.onclick=function(){
+                arr.push(arr.shift());
+                console.log(arr);
+                for(var i=0; i<arr.length; i++){
+                    aLi[i].className=arr[i];
+                }
+            };
+		};
+	};
+</script>
+<body>
+	<div class="main">
+		<footer>
+			<i>HTML5 源码效果案例</i>
+			<div class="line"></div>
+			<img  src="image/logo.png">
+			<div class="main-page"><a href="index.html" target="_blank">回到首页</a></div>
+		</footer>
+		<div class="prev"><i class="iconfont">&#xe601;</i></div>
+		<div class="next"><i class="iconfont">&#xe600;</i></div>
+		<ul class="list">
+			<li>
+				<img src="img/acidbear.png">
+				<div class="con">3D爆炸效果</div>
+			</li>
+			<li>
+				<img src="img/adidasbear.png">
+				<div class="con">3D翻转效果</div>
+			</li>
+			<li>
+				<img src="img/atomicbearpink.png">
+				<div class="con">3D翻页效果</div>
+			</li>
+			<li>
+				<img src="img/bestioleclearbluedog.png">
+				<div class="con">3D图片环效果</div>
+			</li>
+			<li>
+				<img src="img/britbear.png">
+				<div class="con">3D正方体效果</div>
+			</li>
+			<li>
+				<img src="img/brooklynbomber.png">
+				<div class="con">3D淡入淡出效果</div>
+			</li>
+			<li>
+				<img src="img/cagematchcat.png">
+				<div class="con">3D光圈效果</div>
+			</li>
+			<li>
+				<img src="img/chesirecat.png">
+				<div class="con">多图片展示</div>
+			</li>
+		</ul>
+		<ul class="list" style="display: none;">
+			<li>
+				<img src="img/cleardog.png">
+				<div class="con">钢琴效果</div>
+			</li>
+			<li>
+				<img src="img/cleartoyer.png">
+				<div class="con">音乐播放器</div>
+			</li>
+			<li>
+				<img src="img/darkside.png">
+				<div class="con">视频播放器</div>
+			</li>
+			<li>
+				<img src="img/devil666bear.png">
+				<div class="con">学习中....</div>
+			</li>
+			<li>
+				<img src="img/dokuroinudog.png">
+				<div class="con">学习中....</div>
+			</li>
+			<li>
+				<img src="img/eggred.png">
+				<div class="con">学习中....</div>
+			</li>
+			<li>
+				<img src="img/egyptiancat.png">
+				<div class="con">学习中....</div>
+			</li>
+			<li>
+				<img src="img/fangwolf.png">
+				<div class="con">学习中....</div>
+			</li>
+		</ul>
+	</div>
+
+	<!-- 爆炸 -->
+	<!-- <div class="case1 case">
+		<div class="mask"></div>
+		<input type="button" value="切换">
+		<div id="case1"></div>
+		<div class="close">close</div>
+		<i>3D爆炸效果</i>
+		<div class="line"></div>
+		<img class="shadow" src="img/shadow.png">
+	</div> -->
+
+	<!-- 翻转 -->
+	<!-- <div class="case2 case">
+		<div class="mask"></div>
+		<input type="button" value="切换">
+		<div id="case2"></div>
+		<div class="close">close</div>
+		<i>3D翻转效果</i>
+		<div class="line"></div>
+		<img class="shadow" src="img/shadow.png">
+	</div> -->
+
+	<!-- 翻页 -->
+	<!-- <div class="case3 case">
+		<div class="mask"></div>
+		<input type="button" value="切换">
+		<div id="case3">
+			<div class="page">
+				<div class="front"></div>
+				<div class="back"></div>
+			</div>
+			<div class="page2"></div>
+		</div>
+		<div class="close">close</div>
+		<i>3D翻页效果</i>
+		<div class="line"></div>
+		<img class="shadow" src="img/shadow.png">
+	</div> -->
+
+	<!-- 图片环 -->
+	<!-- <div class="case4 case">
+		<div class="mask"></div>
+		<ul id="case4">
+    	</ul>
+		<div class="close">close</div>
+		<i>3D图片环效果</i>
+		<div class="line"></div>
+	</div> -->
+
+	<!-- 正方体 -->
+	<!-- <div class="case5 case">
+		<div class="mask"></div>
+		<div id="case5">
+			<img src="img/50.jpg" class="left">
+			<img src="img/51.jpg" class="right">
+			<img src="img/52.jpg" class="top">
+			<img src="img/53.jpg" class="bottom">
+			<img src="img/54.jpg" class="front">
+			<img src="img/55.jpg" class="back">
+		</div>
+		<div class="close">close</div>
+		<i>3D正方体效果</i>
+		<div class="line"></div>
+	</div> -->
+
+	<!-- 淡入淡出 -->
+	<!-- <div class="case6 case">
+		<div class="mask"></div>
+		<input type="button" value="←">
+		<input type="button" value="→">
+    	<ul id="case6">
+        	<li class="l2"><img src="img/50.jpg"></li>
+        	<li class="l1"><img src="img/51.jpg"></li>
+        	<li class="cur"><img src="img/52.jpg"></li>
+        	<li class="r1"><img src="img/53.jpg"></li>
+        	<li class="r2"><img src="img/54.jpg"></li>
+        	<li><img src="img/55.jpg"></li>
+        	<li><img src="img/56.jpg"></li>
+        	<li><img src="img/57.jpg"></li>
+    	</ul>
+		<div class="close">close</div>
+		<i>3D淡入淡出效果</i>
+		<div class="line"></div>
+		<img class="shadow" src="img/shadow.png">
+	</div> -->
+
+	<!-- 光圈 -->
+	<!-- <div class="case7 case">
+		<div class="mask"></div>
+		<div id="case7"></div>
+		<div class="close">close</div>
+		<i>h5光圈效果</i>
+		<div class="line"></div>
+	</div> -->
+
+	<!-- 多图片展示-->
+	<!-- <div class="case8 case">
+		<div class="mask"></div>
+		<ul id="case8">
+	        <li><img src="img/1.jpg"></li>
+	        <li><img src="img/2.jpg"></li>
+	        <li><img src="img/3.jpg"></li>
+	        <li><img src="img/4.jpg"></li>
+	        <li><img src="img/5.jpg"></li>
+	        <li><img src="img/6.jpg"></li>
+	        <li><img src="img/0.jpg"></li>
+	        <li><img src="img/53.jpg"></li>
+	        <li><img src="img/56.jpg"></li>
+	    </ul>
+		<div class="close">close</div>
+		<i>多图片展示</i>
+		<div class="line"></div>
+	</div> -->
+</body>
+</html>
